@@ -31,7 +31,7 @@ public class Pars {
     private static final Logger LOGGER = Logger.getLogger(Pars.class.getName());
     private static final File[] selectedXsdFile = new File[1]; //наш xsd файл
     private static final int MAX_FILES_TO_PROCESS = 10;
-    private static final long MAX_TOTAL_FILE_SIZE_KB = 512000;
+    private static final long MAX_TOTAL_FILE_SIZE_BYTE = 512000;
 
     private static ArrayList<File> arrayFileToMerge = new ArrayList<>();
 
@@ -205,7 +205,7 @@ public class Pars {
                 rootElement.appendChild(importedNode);
                 totalFileSize += file.length();
             }
-            if (totalFileSize > MAX_TOTAL_FILE_SIZE_KB) {
+            if (totalFileSize > MAX_TOTAL_FILE_SIZE_BYTE) {
                 LOGGER.log(Level.WARNING, "Файл Total.xml превышает 500 КБ.");
                 return;
             }
