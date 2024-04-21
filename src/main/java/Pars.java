@@ -37,6 +37,8 @@ public class Pars {
 
     private static String endPath = "";
 
+    private static boolean exitProgram = false;
+
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(() -> {
@@ -127,7 +129,7 @@ public class Pars {
                     //ищем xml файлы
                     try {
                         findFile(startFolderField.getText());
-                        mergeAndCreateTotalXml(arrayFileToMerge);
+                        if (!exitProgram) {mergeAndCreateTotalXml(arrayFileToMerge);}
                     } catch (Exception ex) {
                         throw new RuntimeException(ex);
                     }
@@ -162,8 +164,11 @@ public class Pars {
         }
         if (files != null) {
             for (File file : files) {
-                System.out.println("Найден XML-файл: " + file);
                 if (validate(selectedXsdFile[0], file)) arrayFileToMerge.add(file);
+                else {LOGGER.log(Level.WARNING, "ОШИБКА ВАЛИДАЦИИ - ВЫХОД ИЗ ПРОГРАММЫ");
+                    exitProgram = true;
+                    return;}
+                System.out.println("Найден XML-файл: " + file);
             }
         }
     }
